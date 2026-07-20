@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+
+# Runtime data: cropped game-screen UI templates + per-day run logs/progress.
+# These contain actual screenshots of your game session and are regenerated
+# automatically on first run — never commit them.
+ui_cache/
+runs/
+
+# Claude Code local machine settings (no secrets, but not portable across machines).
+.claude/settings.local.json

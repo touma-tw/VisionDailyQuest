@@ -1,0 +1,6 @@
+mss
+pygetwindow
+pyautogui
+pillow
+pyyaml
+requests

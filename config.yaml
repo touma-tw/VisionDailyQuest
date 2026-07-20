@@ -1,0 +1,45 @@
+# 視覺模型 provider 設定,切換只需改這裡
+provider: ollama          # ollama | gemini
+window_title: 鈴蘭之劍
+
+ollama:
+  url: http://localhost:11434
+  model: qwen3.6:35b
+  # 思考模式:目前關閉,理由是「優雅降級」而不是「它比較準」。實測:
+  #   單純定位題(ground_test):開=7.1s/通過7of7、關=3.7s/通過6of7 → 開稍好。
+  #   任務描述有矛盾時(星辰試煉曾要求讀一個畫面上不存在的數字):
+  #     開 → 166s、43,416 字 thinking、content 空的 → parse_error(2/2 可重現)
+  #     關 → 3s,猜一個合理動作繼續(那次剛好猜對)
+  #   把該矛盾修掉後,同一張圖:開 → 6s、thinking 只剩 627 字、正常作答。
+  # 所以爆炸是「壞指令」引發的,不是思考模式本身的缺陷 —— 它只是忠實地卡在矛盾上。
+  # 但任務描述必然還會有 bug,寧可要「猜錯後被 end_check/stall 攔下」,
+  # 也不要「166 秒後回空字串」。若哪天誤點隔壁按鈕的問題變嚴重,可重新評估。
+  think: false
+
+gemini:
+  # 使用前先申請 Google AI Studio API key,並 pip install google-genai
+  api_key_env: GEMINI_API_KEY   # 從此環境變數讀取 key
+  model: gemini-flash-latest
+
+# agentic 版(agent/pilot.py)專用
+pilot:
+  # 實測:ollama 不重放歷史 thinking,整套每日約累積 20k tokens,32768 就夠。
+  # 設 65536 當舒適邊際(涵蓋更長的單一任務),KV cache 多吃的 VRAM 很少。
+  num_ctx: 65536
+  # 決策迴圈是否開思考(agentic 版的核心;定位/讀值另走 vision.py 的 ollama.think)。
+  think: true
+  # 單次生成(思考+回答)token 上限:防止思考爆量(壞指令曾讓思考膨脹到 4 萬字、166 秒吐不出答案)。
+  # 正常一步遠用不到這麼多;調小可更快更省,但太小會把合理推理截斷。
+  num_predict: 4096
+  # 卡死自救:單次呼叫超過 request_timeout 秒沒回應 → 判定本地模型卡住/變慢,
+  #   自動卸載模型(清 KV cache、釋放 VRAM)讓 ollama 重新載入(=「重啟本地 AI」),再重試。
+  #   reload_timeout 是重啟後那一次的較寬 timeout(要冷載入),max_retries 是重啟並重試幾次才放棄該步。
+  request_timeout: 60        # 你要求的一分鐘;想更早自救就調小,常誤殺正常長回應就調大
+  reload_timeout: 180
+  max_retries: 2
+  keep_alive: 5m             # 模型在 VRAM 常駐多久;沒被卡死自救打斷時維持載入,避免每次冷啟
+  # UI 座標快取(agent/ui_cache.py):tap 定位在重複時用 cv2 模板比對,免呼叫 VLM。
+  # UI 幾乎不變,所以第一次用 VLM 定位、之後直接比對命中 —— 砍掉每步約 2s 的視覺定位。
+  ui_cache: true
+  cache_dir: ui_cache        # patch 與索引存放目錄
+  cache_threshold: 0.90      # TM_CCOEFF_NORMED 命中門檻;越高越保守(不命中就 fallback VLM)
