@@ -75,6 +75,11 @@ class OllamaProvider:
         self.url = cfg["url"].rstrip("/") + "/api/chat"
         self.model = cfg["model"]
         self.think = cfg.get("think", False)
+        # 定位/讀值必須和 pilot 決策對話用**同一組載入參數**(num_ctx、keep_alive),
+        # 否則 ollama 會把同一個模型當成不同 runner,在兩者之間反覆卸載/重載(VRAM 每幾秒
+        # 從滿載掉到基線再爬回來)。pilot 建構時會把它的 num_ctx/keep_alive 傳進來對齊。
+        self.num_ctx = cfg.get("num_ctx")
+        self.keep_alive = cfg.get("keep_alive")
 
     def _ask(self, image_png: bytes, prompt: str, system: str | None = None) -> str:
         msgs = ([{"role": "system", "content": system}] if system else []) + [
@@ -84,17 +89,19 @@ class OllamaProvider:
                 "images": [base64.b64encode(image_png).decode()],
             }
         ]
-        resp = requests.post(
-            self.url,
-            json={
-                "model": self.model,
-                "think": self.think,
-                "messages": msgs,
-                "stream": False,
-                "options": {"temperature": 0},
-            },
-            timeout=600,
-        )
+        options = {"temperature": 0}
+        if self.num_ctx is not None:
+            options["num_ctx"] = self.num_ctx
+        body = {
+            "model": self.model,
+            "think": self.think,
+            "messages": msgs,
+            "stream": False,
+            "options": options,
+        }
+        if self.keep_alive is not None:
+            body["keep_alive"] = self.keep_alive
+        resp = requests.post(self.url, json=body, timeout=600)
         resp.raise_for_status()
         return resp.json()["message"]["content"]
 

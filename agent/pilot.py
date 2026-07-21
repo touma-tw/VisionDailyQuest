@@ -192,7 +192,11 @@ class Pilot:
         # 重啟模型後那一次呼叫要冷載入,給比較寬鬆的 timeout,免得剛重載又被判成卡死。
         self.reload_timeout = pc.get("reload_timeout", 180)
         self.max_retries = pc.get("max_retries", 2)
-        self.provider = OllamaProvider(oc)  # 借它的 locate/read 專用呼叫
+        # 借它的 locate/read 專用呼叫。關鍵:把 pilot 的 num_ctx/keep_alive 併進去,
+        # 讓定位/讀值和決策對話用同一組載入參數 —— 否則 ollama 會把同一個模型當兩個
+        # runner,在 chat↔定位之間每步反覆卸載/重載(VRAM 每幾秒滿載↔基線來回跳,超慢)。
+        self.provider = OllamaProvider({**oc, "num_ctx": self.num_ctx,
+                                        "keep_alive": self.keep_alive})
         self.win = GameWindow(cfg["window_title"])
         self.knowledge = knowledge
         self.verbose = verbose
