@@ -1,3 +1,6 @@
+# Copyright 2026 touma-tw
+# SPDX-License-Identifier: Apache-2.0
+
 """嚴謹版:遊戲**不在前景**時,PostMessage 還吃不吃?
 
 前一版的瑕疵是測試當下遊戲仍在前景,證明不了背景操作。

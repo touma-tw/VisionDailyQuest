@@ -1,3 +1,6 @@
+# Copyright 2026 touma-tw
+# SPDX-License-Identifier: Apache-2.0
+
 """遊戲視窗定位與截圖。
 
 只處理「用戶區」(client area) —— 不含 Windows 標題列與邊框。

@@ -1,3 +1,6 @@
+# Copyright 2026 touma-tw
+# SPDX-License-Identifier: Apache-2.0
+
 """滑鼠動作:移動真實游標 + 真實點擊(pyautogui)。
 
 **為什麼非得動真實游標?** 實測這款遊戲讀的是 GetCursorPos(真實游標位置),

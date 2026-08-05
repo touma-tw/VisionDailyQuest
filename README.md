@@ -183,6 +183,36 @@ grounding) behind the same interface. To use Gemini: set the `GEMINI_API_KEY` en
 (from Google AI Studio), `pip install google-genai`, and swap the provider construction in
 `pilot.py` to `GeminiProvider(cfg["gemini"])`.
 
+### License
+
+Licensed under the [Apache License 2.0](LICENSE). You are free to use, modify, and redistribute
+this code, including commercially. In return the license asks that you:
+
+- keep the copyright notice and the [`NOTICE`](NOTICE) file with any redistribution;
+- state prominently in any file you modify that you changed it.
+
+In short: build whatever you want on top of it — just don't present this work as if you wrote it
+from scratch.
+
+### Disclaimer
+
+This project is provided **for technical research and educational purposes**. It automates input
+to a game client, and **most games' terms of service prohibit third-party automation** — using it
+may get your account suspended or banned. You are solely responsible for deciding whether and where
+to run it. The software is provided "AS IS", without warranty of any kind (see the License).
+
+### Trademarks and third-party content
+
+Game names referenced in this repository — including 鈴蘭之劍 / "Lily Sword" in `config.yaml` and
+`tasks/daily_goals.yaml` — are trademarks of their respective owners. This project is **not
+affiliated with, endorsed by, or sponsored by** any game developer or publisher. Those references
+exist only as a worked configuration example.
+
+**Do not commit game screenshots.** The `ui_cache/` and `runs/` directories hold cropped captures
+of your own game session; game artwork is the copyrighted work of its publisher. Both directories
+are already in `.gitignore` and are regenerated automatically — keep them that way when you fork
+this repo.
+
 ---
 
 <a id="中文"></a>
@@ -337,3 +367,29 @@ timeout(`pilot.request_timeout`);一旦超時就把模型卸載(`keep_alive: 0`,
 同一套介面。要改用 Gemini:設定環境變數 `GEMINI_API_KEY`(從 Google AI Studio 申請)、
 `pip install google-genai`,並把 `pilot.py` 裡建立 provider 的地方換成
 `GeminiProvider(cfg["gemini"])`。
+
+### 授權
+
+本專案採用 [Apache License 2.0](LICENSE)。你可以自由使用、修改、再散布,包含商業用途。
+授權要求的回報是:
+
+- 再散布時保留版權聲明與 [`NOTICE`](NOTICE) 檔案;
+- 修改過的檔案要顯著標示你改過。
+
+一句話:拿去做任何東西都可以,但別把這份成果講成是你從零寫的。
+
+### 免責聲明
+
+本專案**僅供技術研究與教學用途**。它會對遊戲客戶端送出自動化操作,而**多數遊戲的服務條款
+禁止第三方自動化**——使用本專案可能導致帳號被停權或封鎖。要不要跑、在哪裡跑,風險由你自行
+承擔。本軟體按「現狀」提供,不附任何形式的擔保(詳見授權條款)。
+
+### 商標與第三方內容
+
+本 repo 中提到的遊戲名稱——包含 `config.yaml` 與 `tasks/daily_goals.yaml` 裡的
+「鈴蘭之劍」/ "Lily Sword"——為其各自權利人之商標。本專案**與任何遊戲開發商、發行商均無
+隸屬關係,亦未獲其背書或贊助**,這些名稱只是作為一份完整設定範例而存在。
+
+**請勿把遊戲截圖 commit 進版控。** `ui_cache/` 與 `runs/` 目錄存放的是你自己遊戲畫面的
+裁切圖,而遊戲美術是發行商的著作權物。這兩個目錄已列入 `.gitignore`,且會在首次執行時自動
+重新產生——你 fork 之後請維持這個設定。

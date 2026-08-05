@@ -1,3 +1,6 @@
+# Copyright 2026 touma-tw
+# SPDX-License-Identifier: Apache-2.0
+
 """探測這款遊戲能不能「背景操作」—— 不搶焦點、不動真實游標。
 
 兩件事分開測,結果可能不對稱:

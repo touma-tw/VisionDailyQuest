@@ -1,3 +1,6 @@
+# Copyright 2026 touma-tw
+# SPDX-License-Identifier: Apache-2.0
+
 """VLM provider 抽象層 —— 只做 agentic pilot 需要的兩件事:
 
     locate()  截圖 + 目標描述 → bbox_2d → 中心座標(0~1000 相對)

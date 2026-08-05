@@ -1,3 +1,6 @@
+# Copyright 2026 touma-tw
+# SPDX-License-Identifier: Apache-2.0
+
 """UI 座標快取:讓「找某個按鈕在哪」在重複時免呼叫 VLM。
 
 背景(和 pilot.py / vision.py 的分工):

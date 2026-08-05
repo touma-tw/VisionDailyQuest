@@ -1,3 +1,6 @@
+# Copyright 2026 touma-tw
+# SPDX-License-Identifier: Apache-2.0
+
 """Agentic pilot:讓模型在連續對話裡自己規劃、操作、糾錯。
 
 和 workflow 版(loop.py)的根本差別:

@@ -1,3 +1,6 @@
+# Copyright 2026 touma-tw
+# SPDX-License-Identifier: Apache-2.0
+
 """診斷:合成滑鼠事件是否能送達遊戲。
 
 1. 找到遊戲視窗,印出 PID 與是否提權(提權程序會因 UIPI 擋掉低權限合成輸入)

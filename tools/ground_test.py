@@ -1,3 +1,6 @@
+# Copyright 2026 touma-tw
+# SPDX-License-Identifier: Apache-2.0
+
 """Grounding 精度驗證:把主畫面截圖丟給 VLM,要求回報 UI 元素座標,
 將標記畫回圖片存檔,供人工目視檢查誤差。
 
