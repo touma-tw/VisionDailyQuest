@@ -34,7 +34,7 @@ mistake and try something else instead of hammering the same wrong spot.
 ### Requirements
 
 - A Windows game client running in windowed mode
-- Local [Ollama](https://ollama.com) with a vision-capable model (developed against `qwen3.6:35b`;
+- Local [Ollama](https://ollama.com) with a vision-capable model (developed against `qwen3.6:35b` and `qwen3.8:27b`;
   verify your model supports image grounding — many "small" local models don't)
 - Python venv: `pip install -r requirements.txt` (requests, pillow, pyautogui, opencv, numpy, pyyaml, mss, pygetwindow)
 
@@ -241,7 +241,7 @@ this repo.
 ### 需求
 
 - 一款以視窗模式執行的 Windows 遊戲客戶端
-- 本地 [Ollama](https://ollama.com) + 有視覺能力的模型(開發時用 `qwen3.6:35b` 驗證過;
+- 本地 [Ollama](https://ollama.com) + 有視覺能力的模型(開發時用 `qwen3.6:35b` 驗證過; 後續也在`qwen3.8:27b`驗證過
   請先確認你的模型支援影像定位——很多「小型」本地模型其實不支援)
 - Python venv:`pip install -r requirements.txt`(requests、pillow、pyautogui、opencv、numpy、pyyaml、mss、pygetwindow)
 
